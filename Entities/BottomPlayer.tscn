@@ -1,0 +1,108 @@
+[gd_scene load_steps=12 format=2]
+
+[ext_resource path="res://Sprites/monochrome_transparent.png" type="Texture" id=1]
+[ext_resource path="res://Entities/BottomPlayer.gd" type="Script" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 11.4358, 10.483 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "Idle"
+length = 0.4
+loop = true
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3 ),
+"transitions": PoolRealArray( 1, 1, 1, 1 ),
+"update": 1,
+"values": [ 355, 354, 356, 354 ]
+}
+
+[sub_resource type="Animation" id=3]
+resource_name = "Jump"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:frame")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0 ),
+"transitions": PoolRealArray( 1 ),
+"update": 1,
+"values": [ 357 ]
+}
+tracks/1/type = "value"
+tracks/1/path = NodePath("Sprite:offset")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4, 0.5 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, -1 ), Vector2( 0, -4 ), Vector2( 0, -8 ), Vector2( 0, -10 ), Vector2( 0, -3 ), Vector2( 0, 0 ) ]
+}
+
+[sub_resource type="AnimationNodeAnimation" id=4]
+animation = "Idle"
+
+[sub_resource type="AnimationNodeAnimation" id=5]
+animation = "Jump"
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=6]
+
+[sub_resource type="AnimationNodeStateMachineTransition" id=7]
+switch_mode = 2
+auto_advance = true
+
+[sub_resource type="AnimationNodeStateMachine" id=8]
+states/Idle/node = SubResource( 4 )
+states/Idle/position = Vector2( 625.667, 160.333 )
+states/Jump/node = SubResource( 5 )
+states/Jump/position = Vector2( 788.333, 159.889 )
+transitions = [ "Idle", "Jump", SubResource( 6 ), "Jump", "Idle", SubResource( 7 ) ]
+start_node = "Idle"
+
+[sub_resource type="AnimationNodeStateMachinePlayback" id=9]
+
+[node name="BottomPlayer" type="KinematicBody2D" groups=[
+"Player",
+]]
+modulate = Color( 1, 1, 0, 1 )
+script = ExtResource( 2 )
+
+[node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 2, 2 )
+texture = ExtResource( 1 )
+hframes = 48
+vframes = 22
+frame = 354
+region_rect = Rect2( 306, 119, 16, 16 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2( 0.0395012, 3.03752 )
+shape = SubResource( 1 )
+
+[node name="InvincibleTimer" type="Timer" parent="."]
+wait_time = 0.5
+one_shot = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Idle = SubResource( 2 )
+anims/Jump = SubResource( 3 )
+
+[node name="AnimationTree" type="AnimationTree" parent="."]
+tree_root = SubResource( 8 )
+anim_player = NodePath("../AnimationPlayer")
+active = true
+parameters/playback = SubResource( 9 )
+
+[connection signal="timeout" from="InvincibleTimer" to="." method="_on_InvincibleTimer_timeout"]

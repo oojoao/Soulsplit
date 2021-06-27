@@ -1,0 +1,30 @@
+[gd_scene load_steps=6 format=2]
+
+[ext_resource path="res://Sprites/monochrome_transparent.png" type="Texture" id=1]
+[ext_resource path="res://Entities/Enemies/SpikedEnemy.gd" type="Script" id=2]
+[ext_resource path="res://Entities/BottomEnemies/Spike.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scenes/EnemyLife.tscn" type="PackedScene" id=4]
+
+[sub_resource type="CircleShape2D" id=1]
+radius = 30.4614
+
+[node name="SpikedEnemy" type="KinematicBody2D"]
+script = ExtResource( 2 )
+enemyLifeScene = ExtResource( 4 )
+spike = ExtResource( 3 )
+
+[node name="Sprite" type="Sprite" parent="."]
+scale = Vector2( 2, 2 )
+texture = ExtResource( 1 )
+hframes = 48
+vframes = 22
+frame = 264
+
+[node name="ActionTimer" type="Timer" parent="."]
+wait_time = 2.0
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource( 1 )
+disabled = true
+
+[connection signal="timeout" from="ActionTimer" to="." method="_on_ActionTimer_timeout"]

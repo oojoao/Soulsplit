@@ -1,0 +1,432 @@
+[gd_scene load_steps=18 format=2]
+
+[ext_resource path="res://Scenes/TutorialGameManager.gd" type="Script" id=1]
+[ext_resource path="res://Scenes/TutorialUI.gd" type="Script" id=2]
+[ext_resource path="res://Entities/TopPlayer.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Entities/BottomPlayer.tscn" type="PackedScene" id=4]
+[ext_resource path="res://Entities/BottomEnemies/Spike.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Entities/Props/FireAttackPickup.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Resources/MidnightJunkYard.ttf" type="DynamicFontData" id=7]
+[ext_resource path="res://Entities/Props/HitEffect.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Sprites/monochrome.png" type="Texture" id=9]
+[ext_resource path="res://Sprites/monochrome_transparent.png" type="Texture" id=10]
+[ext_resource path="res://Entities/Props/AttackPickup.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Resources/SFX/Hit.wav" type="AudioStream" id=12]
+[ext_resource path="res://Resources/SFX/Pickup.wav" type="AudioStream" id=13]
+[ext_resource path="res://Resources/SFX/Jump.wav" type="AudioStream" id=16]
+
+[sub_resource type="TileSet" id=1]
+0/name = "monochrome.png 0"
+0/texture = ExtResource( 9 )
+0/tex_offset = Vector2( 0, 0 )
+0/modulate = Color( 1, 1, 1, 1 )
+0/region = Rect2( 323, 0, 16, 16 )
+0/tile_mode = 0
+0/occluder_offset = Vector2( 0, 0 )
+0/navigation_offset = Vector2( 0, 0 )
+0/shape_offset = Vector2( 0, 0 )
+0/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+0/shape_one_way = false
+0/shape_one_way_margin = 0.0
+0/shapes = [  ]
+0/z_index = 0
+1/name = "monochrome.png 1"
+1/texture = ExtResource( 9 )
+1/tex_offset = Vector2( 0, 0 )
+1/modulate = Color( 1, 1, 1, 1 )
+1/region = Rect2( 323, 17, 16, 16 )
+1/tile_mode = 0
+1/occluder_offset = Vector2( 0, 0 )
+1/navigation_offset = Vector2( 0, 0 )
+1/shape_offset = Vector2( 0, 0 )
+1/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+1/shape_one_way = false
+1/shape_one_way_margin = 0.0
+1/shapes = [  ]
+1/z_index = 0
+2/name = "monochrome.png 2"
+2/texture = ExtResource( 9 )
+2/tex_offset = Vector2( 0, 0 )
+2/modulate = Color( 1, 1, 1, 1 )
+2/region = Rect2( 323, 34, 16, 16 )
+2/tile_mode = 0
+2/occluder_offset = Vector2( 0, 0 )
+2/navigation_offset = Vector2( 0, 0 )
+2/shape_offset = Vector2( 0, 0 )
+2/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+2/shape_one_way = false
+2/shape_one_way_margin = 0.0
+2/shapes = [  ]
+2/z_index = 0
+4/name = "monochrome.png 4"
+4/texture = ExtResource( 9 )
+4/tex_offset = Vector2( 0, 0 )
+4/modulate = Color( 1, 1, 1, 1 )
+4/region = Rect2( 289, 221, 16, 16 )
+4/tile_mode = 0
+4/occluder_offset = Vector2( 0, 0 )
+4/navigation_offset = Vector2( 0, 0 )
+4/shape_offset = Vector2( 0, 0 )
+4/shape_transform = Transform2D( 1, 0, 0, 1, 0, 0 )
+4/shape_one_way = false
+4/shape_one_way_margin = 0.0
+4/shapes = [  ]
+4/z_index = 0
+
+[sub_resource type="DynamicFont" id=2]
+font_data = ExtResource( 7 )
+
+[sub_resource type="DynamicFont" id=3]
+font_data = ExtResource( 7 )
+
+[node name="World" type="Node2D"]
+
+[node name="UI" type="Control" parent="."]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_right = 1024.0
+margin_bottom = 600.0
+script = ExtResource( 2 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Background" type="ColorRect" parent="UI"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color( 0.0431373, 0.0431373, 0.0431373, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="BottomScreen" type="ReferenceRect" parent="UI"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_top = 220.0
+border_color = Color( 1, 1, 1, 1 )
+border_width = 3.0
+editor_only = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="PlayerBoundaries" type="ReferenceRect" parent="UI/BottomScreen"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 26.0
+margin_top = 151.0
+margin_right = -737.0
+margin_bottom = -44.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GroundSpawn" type="ReferenceRect" parent="UI/BottomScreen"]
+margin_left = 1023.78
+margin_top = 172.0
+margin_right = 1055.78
+margin_bottom = 332.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AirSpawn" type="ReferenceRect" parent="UI/BottomScreen"]
+margin_left = 581.413
+margin_top = 7.58739
+margin_right = 1010.41
+margin_bottom = 50.5874
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Floor" type="ColorRect" parent="UI/BottomScreen"]
+show_behind_parent = true
+margin_left = 1.0
+margin_top = 136.0
+margin_right = 1023.0
+margin_bottom = 379.0
+color = Color( 0, 0, 0, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TileMap" type="TileMap" parent="UI/BottomScreen/Floor"]
+position = Vector2( 0, 3 )
+scale = Vector2( 2, 2 )
+tile_set = SubResource( 1 )
+cell_size = Vector2( 16, 16 )
+cell_tile_origin = 1
+collision_layer = 0
+collision_mask = 0
+format = 1
+tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, 12, 0, 0, 13, 0, 0, 14, 0, 0, 15, 0, 0, 16, 0, 0, 17, 0, 0, 18, 0, 0, 19, 0, 0, 20, 0, 0, 21, 0, 0, 22, 0, 0, 23, 0, 0, 24, 0, 0, 25, 0, 0, 26, 0, 0, 27, 0, 0, 28, 0, 0, 29, 0, 0, 30, 0, 0, 31, 0, 0, 393216, 2, 0, 393217, 2, 0, 393218, 2, 0, 393219, 2, 0, 393220, 2, 0, 393221, 2, 0, 393222, 2, 0, 393223, 2, 0, 393224, 2, 0, 393225, 2, 0, 393226, 2, 0, 393227, 2, 0, 393228, 2, 0, 393229, 2, 0, 393230, 2, 0, 393231, 2, 0, 393232, 2, 0, 393233, 2, 0, 393234, 2, 0, 393235, 2, 0, 393236, 2, 0, 393237, 2, 0, 393238, 2, 0, 393239, 2, 0, 393240, 2, 0, 393241, 2, 0, 393242, 2, 0, 393243, 2, 0, 393244, 2, 0, 393245, 2, 0, 393246, 2, 0, 393247, 2, 0 )
+
+[node name="TopScreen" type="ReferenceRect" parent="UI"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_bottom = -380.0
+border_color = Color( 1, 1, 1, 1 )
+border_width = 3.0
+editor_only = false
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="ColorRect" type="ColorRect" parent="UI/TopScreen"]
+show_behind_parent = true
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 1.0
+margin_top = -35.0
+margin_right = -1.0
+margin_bottom = -1.0
+color = Color( 0.054902, 0.0392157, 0.211765, 1 )
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TileMap" type="TileMap" parent="UI/TopScreen/ColorRect"]
+position = Vector2( 0, 3 )
+scale = Vector2( 2, 2 )
+tile_set = SubResource( 1 )
+cell_size = Vector2( 16, 16 )
+cell_tile_origin = 1
+collision_layer = 0
+collision_mask = 0
+format = 1
+tile_data = PoolIntArray( 0, 0, 0, 1, 0, 0, 2, 0, 0, 3, 0, 0, 4, 0, 0, 5, 0, 0, 6, 0, 0, 7, 0, 0, 8, 0, 0, 9, 0, 0, 10, 0, 0, 11, 0, 0, 12, 0, 0, 13, 0, 0, 14, 0, 0, 15, 0, 0, 16, 0, 0, 17, 0, 0, 18, 0, 0, 19, 0, 0, 20, 0, 0, 21, 0, 0, 22, 0, 0, 23, 0, 0, 24, 0, 0, 25, 0, 0, 26, 0, 0, 27, 0, 0, 28, 0, 0, 29, 0, 0, 30, 0, 0, 31, 0, 0 )
+
+[node name="LeftSpawn" type="Control" parent="UI/TopScreen"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 390.0
+margin_top = 51.0
+margin_right = -594.0
+margin_bottom = -18.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GroundSpawn" type="ReferenceRect" parent="UI/TopScreen/LeftSpawn"]
+margin_left = 1.5
+margin_top = 120.0
+margin_right = 2.5
+margin_bottom = 121.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AirSpawn" type="ReferenceRect" parent="UI/TopScreen/LeftSpawn"]
+margin_left = 1.5
+margin_top = 35.0
+margin_right = 2.5
+margin_bottom = 36.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="RightSpawn" type="Control" parent="UI/TopScreen"]
+anchor_right = 1.0
+anchor_bottom = 1.0
+margin_left = 650.0
+margin_top = 51.0
+margin_right = -334.0
+margin_bottom = -18.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="GroundSpawn" type="ReferenceRect" parent="UI/TopScreen/RightSpawn"]
+margin_left = 1.5
+margin_top = 120.0
+margin_right = 2.5
+margin_bottom = 121.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="AirSpawn" type="ReferenceRect" parent="UI/TopScreen/RightSpawn"]
+margin_left = 1.5
+margin_top = 35.0
+margin_right = 2.5
+margin_bottom = 36.0
+
+[node name="PlayerSpot" type="ReferenceRect" parent="UI/TopScreen"]
+margin_left = 512.0
+margin_top = 170.0
+margin_right = 513.0
+margin_bottom = 171.0
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="TopEnemies" type="Node2D" parent="."]
+
+[node name="BottomEnemies" type="Node2D" parent="."]
+
+[node name="Units" type="Node2D" parent="."]
+
+[node name="TopPlayer" parent="Units" instance=ExtResource( 3 )]
+
+[node name="BottomPlayer" parent="Units" instance=ExtResource( 4 )]
+
+[node name="GameManager" type="Node" parent="."]
+script = ExtResource( 1 )
+hitEffect = ExtResource( 8 )
+powerUpPool = [ ExtResource( 5 ), ExtResource( 11 ), ExtResource( 6 ) ]
+
+[node name="PowerUpPool" type="Timer" parent="GameManager"]
+wait_time = 1.5
+autostart = true
+
+[node name="Hit" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 12 )
+volume_db = -15.0
+
+[node name="Jump" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 16 )
+volume_db = -15.0
+
+[node name="Pickup" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 13 )
+volume_db = -15.0
+
+[node name="Label" type="Label" parent="."]
+margin_left = 425.851
+margin_top = 223.506
+margin_right = 605.851
+margin_bottom = 278.506
+custom_fonts/font = SubResource( 2 )
+text = "CHANGE LOOKING SIDE:
+CTRL - JOYSTICK BUTTON 1"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label4" type="Label" parent="."]
+margin_left = 748.587
+margin_top = 36.3658
+margin_right = 972.587
+margin_bottom = 91.3658
+custom_fonts/font = SubResource( 2 )
+text = "ENEMIES SPAWN ON BOTH SIDES!"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label5" type="Label" parent="."]
+margin_left = 702.864
+margin_top = 91.9239
+margin_right = 1008.86
+margin_bottom = 175.924
+custom_fonts/font = SubResource( 2 )
+text = "SOMETIMES, ENEMIES SPAWN AS ELITES!
+ELITES HAVE DOUBLE HEALTH, COLOR CHANGE
+AND A BONUS POWERUP WHEN KILLED!"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label6" type="Label" parent="."]
+margin_left = 588.571
+margin_top = 301.461
+margin_right = 894.571
+margin_bottom = 385.461
+custom_fonts/font = SubResource( 2 )
+text = "PICKUP SWORDS TO KILL ENEMIES!
+AVOID DANGERS LIKE ARROWS AND SPIKES!"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label7" type="Label" parent="."]
+margin_left = 9.16998
+margin_top = 101.448
+margin_right = 374.17
+margin_bottom = 185.448
+custom_fonts/font = SubResource( 2 )
+text = "ENEMIES ON THE TOP PART OF THE SCREEN
+SPAWN TRAPS ON THE BOTTOM SIDE. KILL THEM FAST!"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label2" type="Label" parent="."]
+margin_left = 243.245
+margin_top = 268.701
+margin_right = 438.245
+margin_bottom = 323.701
+custom_fonts/font = SubResource( 2 )
+text = "JUMP:
+SPACE - JOYSTICK BUTTON 0"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label3" type="Label" parent="."]
+margin_left = 19.799
+margin_top = 234.759
+margin_right = 214.799
+margin_bottom = 347.759
+custom_fonts/font = SubResource( 2 )
+text = "MOVE:
+W S A D
+ARROW KEYS
+JOYSTICK D-PAD"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Label8" type="Label" parent="."]
+margin_left = 45.1974
+margin_top = 6.17361
+margin_right = 297.197
+margin_bottom = 119.174
+custom_fonts/font = SubResource( 2 )
+text = "YOU PLAY ON TWO SCREENS:
+THE TOP PART KILLS ENEMIES,
+WHILE THE BOTTOM TRIES TO SURVIVE"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[node name="Sprite2" type="Sprite" parent="."]
+position = Vector2( 555.792, 269.173 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 10 )
+offset = Vector2( -82.0272, -91.4531 )
+hframes = 48
+vframes = 22
+frame = 266
+
+[node name="Sprite" type="Sprite" parent="."]
+modulate = Color( 1, 0, 0, 1 )
+position = Vector2( 653.367, 168.291 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 10 )
+hframes = 48
+vframes = 22
+frame = 264
+
+[node name="Sprite3" type="Sprite" parent="."]
+position = Vector2( 280.014, 171.12 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 10 )
+hframes = 48
+vframes = 22
+frame = 264
+
+[node name="Button" type="Button" parent="."]
+margin_left = 884.0
+margin_top = 522.0
+margin_right = 999.0
+margin_bottom = 558.0
+custom_fonts/font = SubResource( 3 )
+text = "BACK"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="timeout" from="GameManager/PowerUpPool" to="GameManager" method="_on_PowerUpPool_timeout"]
+[connection signal="pressed" from="Button" to="GameManager" method="_on_Button_pressed"]

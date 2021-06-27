@@ -1,0 +1,57 @@
+[gd_scene load_steps=5 format=2]
+
+[ext_resource path="res://Entities/Props/InstaKillPickup.gd" type="Script" id=1]
+[ext_resource path="res://Sprites/monochrome_transparent.png" type="Texture" id=2]
+
+[sub_resource type="RectangleShape2D" id=1]
+extents = Vector2( 16, 16 )
+
+[sub_resource type="Animation" id=2]
+resource_name = "Floating"
+length = 0.4
+tracks/0/type = "value"
+tracks/0/path = NodePath("Sprite:position")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/keys = {
+"times": PoolRealArray( 0, 0.1, 0.2, 0.3, 0.4 ),
+"transitions": PoolRealArray( 1, 1, 1, 1, 1 ),
+"update": 0,
+"values": [ Vector2( 0, 0 ), Vector2( 0, 0.3 ), Vector2( 0, 0.6 ), Vector2( 0, 0.3 ), Vector2( 0, 0 ) ]
+}
+
+[node name="InstaKillPickup" type="KinematicBody2D"]
+modulate = Color( 0, 0.803922, 0.803922, 1 )
+script = ExtResource( 1 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
+shape = SubResource( 1 )
+disabled = true
+
+[node name="Sprite" type="Sprite" parent="."]
+position = Vector2( 0, 0.3 )
+scale = Vector2( 2, 2 )
+texture = ExtResource( 2 )
+hframes = 48
+vframes = 22
+frame = 466
+region_enabled = true
+region_rect = Rect2( 0, 0, 815, 373 )
+
+[node name="VisibilityNotifier2D" type="VisibilityNotifier2D" parent="."]
+position = Vector2( -3.8147e-06, -3.09944e-06 )
+scale = Vector2( 3.13509, 3.13509 )
+
+[node name="DamageArea" type="Area2D" parent="."]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="DamageArea"]
+shape = SubResource( 1 )
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+anims/Floating = SubResource( 2 )
+
+[connection signal="screen_exited" from="VisibilityNotifier2D" to="." method="_on_VisibilityNotifier2D_screen_exited"]
+[connection signal="body_entered" from="DamageArea" to="." method="_on_DamageArea_body_entered"]

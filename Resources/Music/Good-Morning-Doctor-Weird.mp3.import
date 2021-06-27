@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/Good-Morning-Doctor-Weird.mp3-10093a2179cb0af873153d789ee6827a.mp3str"
+
+[deps]
+
+source_file="res://Resources/Music/Good-Morning-Doctor-Weird.mp3"
+dest_files=[ "res://.import/Good-Morning-Doctor-Weird.mp3-10093a2179cb0af873153d789ee6827a.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0

@@ -1,0 +1,76 @@
+[gd_scene load_steps=17 format=2]
+
+[ext_resource path="res://Scenes/UI.tscn" type="PackedScene" id=1]
+[ext_resource path="res://Entities/TopPlayer.tscn" type="PackedScene" id=2]
+[ext_resource path="res://Entities/BottomPlayer.tscn" type="PackedScene" id=3]
+[ext_resource path="res://Scripts/GameManager.gd" type="Script" id=4]
+[ext_resource path="res://Entities/Enemies/SpikedEnemy.tscn" type="PackedScene" id=5]
+[ext_resource path="res://Entities/Props/AttackPickup.tscn" type="PackedScene" id=6]
+[ext_resource path="res://Scenes/LoserPopup.tscn" type="PackedScene" id=7]
+[ext_resource path="res://Entities/Props/FireAttackPickup.tscn" type="PackedScene" id=8]
+[ext_resource path="res://Entities/Props/InstaKillPickup.tscn" type="PackedScene" id=9]
+[ext_resource path="res://Entities/Props/HealPickup.tscn" type="PackedScene" id=10]
+[ext_resource path="res://Entities/Props/HitEffect.tscn" type="PackedScene" id=11]
+[ext_resource path="res://Entities/Enemies/DrillEnemy.tscn" type="PackedScene" id=12]
+[ext_resource path="res://Resources/Music/Good-Morning-Doctor-Weird.mp3" type="AudioStream" id=13]
+[ext_resource path="res://Resources/SFX/Hit.wav" type="AudioStream" id=14]
+[ext_resource path="res://Resources/SFX/Pickup.wav" type="AudioStream" id=15]
+[ext_resource path="res://Resources/SFX/Jump.wav" type="AudioStream" id=16]
+
+[node name="World" type="Node2D"]
+
+[node name="UI" parent="." instance=ExtResource( 1 )]
+margin_right = 1024.0
+margin_bottom = 600.0
+
+[node name="TopEnemies" type="Node2D" parent="."]
+
+[node name="BottomEnemies" type="Node2D" parent="."]
+
+[node name="Units" type="Node2D" parent="."]
+
+[node name="TopPlayer" parent="Units" instance=ExtResource( 2 )]
+
+[node name="BottomPlayer" parent="Units" instance=ExtResource( 3 )]
+
+[node name="GameManager" type="Node" parent="."]
+script = ExtResource( 4 )
+hitEffect = ExtResource( 11 )
+losePopup = ExtResource( 7 )
+enemyPool = [ ExtResource( 5 ), ExtResource( 12 ), ExtResource( 12 ), ExtResource( 5 ), ExtResource( 5 ) ]
+powerUpPool = [ ExtResource( 6 ), ExtResource( 8 ), ExtResource( 9 ), ExtResource( 10 ) ]
+
+[node name="DifficultyTimer" type="Timer" parent="GameManager"]
+wait_time = 5.0
+autostart = true
+
+[node name="Spawner" type="Timer" parent="GameManager"]
+wait_time = 3.0
+autostart = true
+
+[node name="PowerUpPool" type="Timer" parent="GameManager"]
+wait_time = 1.5
+autostart = true
+
+[node name="Music" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 13 )
+volume_db = -15.0
+pitch_scale = 1.01
+autoplay = true
+
+[node name="Hit" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 14 )
+volume_db = -15.0
+
+[node name="Jump" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 16 )
+volume_db = -15.0
+
+[node name="Pickup" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 15 )
+volume_db = -15.0
+
+[connection signal="timeout" from="GameManager/DifficultyTimer" to="GameManager" method="_on_DifficultyTimer_timeout"]
+[connection signal="timeout" from="GameManager/Spawner" to="GameManager" method="_on_Spawner_timeout"]
+[connection signal="timeout" from="GameManager/PowerUpPool" to="GameManager" method="_on_PowerUpPool_timeout"]
+[connection signal="finished" from="Music" to="GameManager" method="_on_Music_finished"]
